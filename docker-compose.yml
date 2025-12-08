@@ -41,7 +41,7 @@ services:
   api-tests:
     build:
       context: .
-      dockerfile: Dockerfile.tests  # testler için özel Dockerfile yoksa backend Dockerfile'ını kullanabilirsin
+      dockerfile: Dockerfile.tests
     container_name: galerist-api-tests
     depends_on:
       db:
@@ -52,7 +52,7 @@ services:
       - app-net
     environment:
       BASE_URL: http://backend:8080
-    command: ["mvn", "test"]  # veya mvn test, senin test komutuna göre değiştir
+    command: ["mvn", "test"]
 
 volumes:
   galerist-data:
