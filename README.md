@@ -1,4 +1,4 @@
-# 🚗 Gallerist Projesi
+# 🚗 Oto Galeri Projesi
 
 Gallerist, Arac satısı için hazırlanmıs bir backend projesidir.Herhangi bir isterden api lar üzerinden servis saglar
 USD ve TR olarak para birimlerini anlık merkez bankası verilerine göre kur kontrolu yapıp donusumunu gerceklestirir.
