@@ -1,4 +1,4 @@
-package tests.Address;
+package tests;
 
 import clients.AddressClient;
 import clients.AuthClient;
@@ -46,6 +46,34 @@ public class AddressTest {
         assertNotNull(jsonPath.getString("payload.neighborhood"));
         assertNotNull(jsonPath.getString("payload.street"));
 
+
+
+    }
+
+
+    //@Test
+    public void getTheAddressNegativeTest(){
+
+        Long addressId=1L;
+        String accessToken;
+
+        Map<String, String> userCredential = new HashMap<>();
+
+        userCredential.put("username", "erdogan");
+        userCredential.put("password", "1234");
+
+
+        Response response= authClient.getAuthResponse(userCredential);
+
+        JsonPath jsonPathToken = response.jsonPath();
+        accessToken=jsonPathToken.getString("payload.accessToken");
+
+        Response responseAddress=  addressClient.getAdress(addressId,accessToken);
+
+        JsonPath jsonPath=responseAddress.getBody().jsonPath();
+
+        assertEquals("500",jsonPath.getString("status"));
+        assertEquals("kayıt bulunamadı",jsonPath.getString("exception.message"));
 
     }
 

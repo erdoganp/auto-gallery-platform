@@ -1,4 +1,4 @@
-package tests.Address;
+package tests;
 
 import clients.AuthClient;
 import io.restassured.path.json.JsonPath;

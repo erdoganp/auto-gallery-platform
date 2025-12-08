@@ -1,0 +1,22 @@
+# Maven + JDK görüntüsünü kullan
+
+FROM eclipse-temurin:17-jdk-alpine
+RUN echo "### TEST-DOCKERFILE ÇALIŞTI ###"
+WORKDIR /app
+COPY . .
+CMD ["echo", "TESTLER ÇALIŞTI"]
+
+
+FROM maven:3.9.6-eclipse-temurin-17 AS builder
+
+WORKDIR /app
+
+# Maven bağımlılıkları cachelemek için
+COPY pom.xml .
+RUN mvn dependency:go-offline
+
+# Test kodlarını kopyala
+COPY src ./src
+
+# Testleri çalıştır
+CMD ["mvn", "test"]

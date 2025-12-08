@@ -1,0 +1,62 @@
+version: "3.9"
+
+services:
+
+  db:
+    image: postgres:15
+    container_name: galerist-postgres
+    environment:
+      POSTGRES_DB: galerist
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    networks:
+      - app-net
+    volumes:
+      - galerist-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: .
+    image: auto-gallery-backend
+    container_name: backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/galerist
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root
+    networks:
+      - app-net
+
+  api-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.tests  # testler için özel Dockerfile yoksa backend Dockerfile'ını kullanabilirsin
+    container_name: galerist-api-tests
+    depends_on:
+      db:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    networks:
+      - app-net
+    environment:
+      BASE_URL: http://backend:8080
+    command: ["mvn", "test"]  # veya mvn test, senin test komutuna göre değiştir
+
+volumes:
+  galerist-data:
+
+networks:
+  app-net:
+    driver: bridge
