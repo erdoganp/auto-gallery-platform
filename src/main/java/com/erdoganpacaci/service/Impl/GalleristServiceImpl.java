@@ -40,6 +40,7 @@ public class GalleristServiceImpl implements GalleristService {
 
         if(optAddress.isEmpty()){
             throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, dtoGalleristUI.getAddressId().toString()));
+
         }
 
         Gallerist gallerist = new Gallerist();
@@ -61,6 +62,7 @@ public class GalleristServiceImpl implements GalleristService {
         Optional<Gallerist> optionalGallerist =galleristRepository.findWithAddress(dtoGalleristUI.getAddressId());
         if(!optionalGallerist.isEmpty()){
             throw new BaseException(new ErrorMessage(MessageType.DATA_IS_ALREADY_USED, "addressid : " +dtoGalleristUI.getAddressId().toString()));
+
         }
 
        Gallerist savedGallerist= galleristRepository.save(createGallerist(dtoGalleristUI));
@@ -81,6 +83,7 @@ public class GalleristServiceImpl implements GalleristService {
 
         if(optionalGallerist.isEmpty()){
             throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+
         }
 
         Gallerist gallerist = optionalGallerist.get();
@@ -105,6 +108,7 @@ public class GalleristServiceImpl implements GalleristService {
 
         if(optionalGallerist.isEmpty()){
             throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+
         }
 
 
@@ -112,6 +116,7 @@ public class GalleristServiceImpl implements GalleristService {
 
         if(!optionalGalleristCar.isEmpty()){
             throw new BaseException(new ErrorMessage(MessageType.GALLERIST_IS_ACTIVE, id.toString()));
+
         }
 
 

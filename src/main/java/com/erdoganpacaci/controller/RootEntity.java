@@ -25,6 +25,9 @@ public class RootEntity<T> {
         return rootEntity;
     }
 
+
+
+
     public  static <T> RootEntity<T> error(String errorMessage) {
 
         RootEntity<T> rootEntity=new RootEntity<>();
@@ -35,5 +38,4 @@ public class RootEntity<T> {
         return rootEntity;
 
     }
-
 }

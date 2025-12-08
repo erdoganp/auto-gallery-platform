@@ -40,11 +40,13 @@ public class GalleristCarServiceImpl implements GalleristCarService {
 
         if(optGallerist.isEmpty()){
             throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, dtoGalleristCarUI.getGalleristId().toString()));
+
         }
 
         Optional<Car> optCar=carRepository.findById(dtoGalleristCarUI.getCarId());
         if(optCar.isEmpty()){
             throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, dtoGalleristCarUI.getCarId().toString()));
+
         }
 
         GalleristCar galleristCar = new GalleristCar();
@@ -108,6 +110,7 @@ public class GalleristCarServiceImpl implements GalleristCarService {
        Optional<GalleristCar> optGalleristCar= galleristCarRepository.findById(id);
        if(optGalleristCar.isEmpty()){
            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+
        }
 
        GalleristCar galleristCar=new GalleristCar();

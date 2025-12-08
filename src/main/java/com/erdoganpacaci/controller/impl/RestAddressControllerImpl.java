@@ -5,11 +5,14 @@ import com.erdoganpacaci.controller.RestBaseController;
 import com.erdoganpacaci.controller.RootEntity;
 import com.erdoganpacaci.dto.DtoAddress;
 import com.erdoganpacaci.dto.DtoAddressUI;
+import com.erdoganpacaci.exception.BaseException;
 import com.erdoganpacaci.service.AddressService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.erdoganpacaci.controller.RootEntity.ok;
 
@@ -30,7 +33,7 @@ public class RestAddressControllerImpl extends RestBaseController implements Res
     @PutMapping("/update/{id}")
     @Override
     public RootEntity<DtoAddress> updateAddress(@Valid @PathVariable(value = "id") Long id,
-                                                       @RequestBody DtoAddressUI dtoAddressUI) {
+                                                @RequestBody DtoAddressUI dtoAddressUI) {
         return ok(addressService.updateAddress(id, dtoAddressUI));
     }
 
@@ -39,5 +42,19 @@ public class RestAddressControllerImpl extends RestBaseController implements Res
     public RootEntity<Void> deleteAddress(@Valid @PathVariable(value = "id") Long id) {
 
         return ok(addressService.deleteAddress(id));
+    }
+
+
+    @PostMapping("/recordAllAddress")
+    @Override
+    public RootEntity<List<DtoAddress>> recordAllAddresses(@Valid @RequestBody List<DtoAddressUI> dtoAddressUI) {
+        return ok(addressService.recordAllAddress(dtoAddressUI));
+    }
+
+    @GetMapping("/getTheAddress/{id}")
+    @Override
+    public RootEntity<DtoAddress> getTheAddress(@Valid @PathVariable(value = "id") Long id) {
+        return ok(addressService.getTheAddress(id));
+
     }
 }

@@ -74,7 +74,8 @@ public class CarServiceImpl implements CarService {
         Optional<Car> optCar=carRepository.findById(id);
         Car dbCar=null;
         if(optCar.isEmpty()){
-            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+           throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+
         }
 
         dbCar=optCar.get();
@@ -93,6 +94,7 @@ public class CarServiceImpl implements CarService {
 
         if(optionalCar.isEmpty()){
             throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+
         }
 
 
@@ -100,6 +102,7 @@ public class CarServiceImpl implements CarService {
 
         if(!optionalGalleristCar.isEmpty()){
             throw new BaseException(new ErrorMessage(MessageType.CAR_IS_ON_SALE, id.toString()));
+
         }
 
 

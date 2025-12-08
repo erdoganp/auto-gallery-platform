@@ -71,6 +71,7 @@ public class AccountServiceImpl implements AccountService {
         Optional<Account> optAccount=accountRepository.findAccountByAccountNo(accountNo);
         if(optAccount.isEmpty()){
             throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, accountNo.toString()));
+
         }
 
         Account account=optAccount.get();
@@ -88,11 +89,13 @@ public class AccountServiceImpl implements AccountService {
         Optional<Account> optAccount=accountRepository.findById(accountId);
         if(optAccount.isEmpty()){
             throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, accountId.toString()));
+
         }
 
         Optional<Customer> optCustomer =customerRepository.findWithAccount(accountId);
         if(optCustomer.isPresent()){
             throw new BaseException(new ErrorMessage(MessageType.DATA_IS_ALREADY_USED, accountId.toString()));
+
         }
 
         accountRepository.delete(optAccount.get());

@@ -41,20 +41,24 @@ public class CustomerServiceImpl implements CustomerService {
 
         if(optionalAddress.isEmpty()){;
             throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, dtoCustomerUI.getAddressId().toString()));
+
         }
 
        Optional<Account> optAccount= accountRepository.findById(dtoCustomerUI.getAccountId());
 
         if(optAccount.isEmpty()){;
             throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, dtoCustomerUI.getAccountId().toString()));
+
         }
 
         if(!optionalCustomerforAccount.isEmpty() ){
             throw new BaseException(new ErrorMessage(MessageType.DATA_IS_ALREADY_USED, "AccountId :"+dtoCustomerUI.getAccountId().toString()));
+
         }
 
         if( !optionalCustomerforAddress.isEmpty()){
             throw new BaseException(new ErrorMessage(MessageType.DATA_IS_ALREADY_USED, "Address Id :" + dtoCustomerUI.getAddressId().toString()));
+
         }
         Customer customer = new Customer();
         customer.setCreateTime((new Date()));
@@ -97,7 +101,8 @@ public class CustomerServiceImpl implements CustomerService {
 
         Optional<Customer> optionalCustomer=customerRepository.findById(id);
          if(optionalCustomer.isEmpty()){
-             throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+
          }
 
 
@@ -131,7 +136,8 @@ public class CustomerServiceImpl implements CustomerService {
 
         Optional<Customer> optCustomer=customerRepository.findById(id);
         if(!optCustomer.isPresent()){
-            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+           throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+
         }
         customerRepository.delete(optCustomer.get());
 

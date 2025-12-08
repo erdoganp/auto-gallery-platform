@@ -39,6 +39,7 @@ public class AppConfig {
 
                     throw new BaseException(new ErrorMessage(MessageType.USERNAME_NOT_FOUND, username));
 
+
                 }
                 return optional.get();
             }

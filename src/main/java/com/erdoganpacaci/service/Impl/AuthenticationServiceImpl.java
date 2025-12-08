@@ -14,6 +14,7 @@ import com.erdoganpacaci.model.User;
 import com.erdoganpacaci.repository.RefreshTokenRepository;
 import com.erdoganpacaci.repository.UserRepository;
 import com.erdoganpacaci.service.AuthenticationService;
+import org.apache.http.HttpStatus;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -108,6 +109,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
            throw new BaseException(new ErrorMessage(MessageType.USERNAME_OR_PASSWORD_INVALID, e.getMessage()));
 
 
+
        }
     }
 
@@ -127,6 +129,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
        if(!isValidRefrshToken(optRefreshToken.get().getExpiredDate())){
 
            throw new BaseException(new ErrorMessage(MessageType.REFRESH_TOKEN_IS_EXPIRED, input.getRefreshToken()));
+
+
        }
 
        User user=optRefreshToken.get().getUser();

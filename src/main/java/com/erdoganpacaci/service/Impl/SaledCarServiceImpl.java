@@ -120,11 +120,13 @@ public class SaledCarServiceImpl implements SaledCarService {
         Optional<Customer>optCustomer=customerRepository.findById(dtoSaledCarUI.getCustomerId());
         if(optCustomer.isEmpty()){
             throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, dtoSaledCarUI.getCustomerId().toString()));
-        }
+
+         }
 
         Optional<Car> optCar =carRepository.findById(dtoSaledCarUI.getCarId());
         if (optCar.isEmpty()){
             throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, dtoSaledCarUI.getCarId().toString()));
+
         }
 
 
@@ -206,10 +208,12 @@ public class SaledCarServiceImpl implements SaledCarService {
 
         if (!(checkCarStatus((dtoSaledCarUI.getCarId())))){
             throw new BaseException(new ErrorMessage(MessageType.CAR_STATUS_IS_ALREADY_SALED, dtoSaledCarUI.getCarId().toString()));
+
         }
 
         if(!checkAmount(dtoSaledCarUI)){
             throw new BaseException(new ErrorMessage(MessageType.CUSTOMER_AMOUNT_IS_NOT_ENOUGH, ""));
+
         }
 
 
