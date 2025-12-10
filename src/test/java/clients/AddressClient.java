@@ -1,12 +1,13 @@
 package clients;
 
+import base.BaseTest;
 import com.erdoganpacaci.dto.DtoAddressUI;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
-public class AddressClient {
+public class AddressClient  extends BaseTest {
 
     public Response getAdress(Long id,String accessToken){
 

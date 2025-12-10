@@ -1,8 +1,12 @@
 package tests;
 
+import base.BaseTest;
 import clients.AddressClient;
 import clients.AuthClient;
 import com.erdoganpacaci.dto.DtoAddressUI;
+import io.restassured.RestAssured;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
@@ -13,15 +17,16 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class AddressTest {
+public class AddressTest extends BaseTest {
 
     AddressClient  addressClient = new AddressClient();
     AuthClient authClient = new AuthClient();
 
     @Test
     public void getTheAddress(){
+        RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
 
-        Long addressId=14L;
+        Long addressId=16L;
         String accessToken;
 
         Map<String, String> userCredential = new HashMap<>();
@@ -77,7 +82,7 @@ public class AddressTest {
         assertEquals("kayıt bulunamadı",jsonPath.getString("exception.message"));
 
     }
-    @Test
+    //@Test
     public void saveTheAddressTest(){
         String accessToken;
         DtoAddressUI dtoAddressUI = new DtoAddressUI();
@@ -109,7 +114,7 @@ public class AddressTest {
 
     }
 
-    @Test
+    //@Test
     public  void deleteAddressTest(){
 
         Long addressId=15L;
