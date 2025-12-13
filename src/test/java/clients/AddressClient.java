@@ -50,4 +50,19 @@ public class AddressClient  extends BaseTest {
                 .statusCode(200)
                 .extract().response();
     }
+
+    public Response updateAddress(String accessToken,Long id,DtoAddressUI dtoAddressUI){
+       return given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", "Bearer " + accessToken)
+                .pathParam("id",id)
+                .body(dtoAddressUI)
+                .when()
+                .put("/rest/api/address/update/{id}")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .extract().response();
+
+    }
 }

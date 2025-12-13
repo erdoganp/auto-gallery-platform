@@ -40,11 +40,12 @@ public class AuthTest extends BaseTest {
     @Order(1)
     void postAuthRegister(){
         Map<String, String> userCredential = new HashMap<>();
-        userCredential.put("username", "erdogan");
+        userCredential.put("username", "ecem3");
         userCredential.put("password", "1234");
         Response response= authClient.postAuthRegister(userCredential);
         JsonPath jsonPath = response.jsonPath();
 
-        assertEquals("erdogan",jsonPath.getString("payload.username"));
+        assertEquals("ecem3",jsonPath.getString("payload.username"));
+        assertEquals("200",jsonPath.getString("status"));
     }
 }

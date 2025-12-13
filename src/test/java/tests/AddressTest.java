@@ -82,7 +82,7 @@ public class AddressTest extends BaseTest {
         assertEquals("kayıt bulunamadı",jsonPath.getString("exception.message"));
 
     }
-    //@Test
+    @Test
     public void saveTheAddressTest(){
         String accessToken;
         DtoAddressUI dtoAddressUI = new DtoAddressUI();
@@ -114,7 +114,7 @@ public class AddressTest extends BaseTest {
 
     }
 
-    //@Test
+    @Test
     public  void deleteAddressTest(){
 
         Long addressId=15L;
@@ -136,6 +136,38 @@ public class AddressTest extends BaseTest {
         JsonPath jsonPath=responseAddress.getBody().jsonPath();
 
         assertEquals("200",jsonPath.getString("status"));
+
+
+    }
+    @Test
+    void updateAddressTest(){
+
+        DtoAddressUI dtoAddressUI = new DtoAddressUI();
+
+        dtoAddressUI.setStreet("merkez updated");
+        dtoAddressUI.setCity("city updated");
+        dtoAddressUI.setNeighborhood("komsu updated");
+        dtoAddressUI.setDistrict("bolge updated");
+
+
+
+
+        Long addressId=16L;
+        String accessToken;
+        Map<String, String> userCredential = new HashMap<>();
+        userCredential.put("username", "erdogan");
+        userCredential.put("password", "1234");
+
+        Response response= authClient.getAuthResponse(userCredential);
+        accessToken=response.jsonPath().getString("payload.accessToken");
+
+       Response responseAddres= addressClient.updateAddress(accessToken,addressId,dtoAddressUI);
+       JsonPath jsonPath=responseAddres.getBody().jsonPath();
+       assertEquals("200",jsonPath.getString("status"));
+       assertEquals(dtoAddressUI.getStreet(),jsonPath.getString("payload.street"));
+       assertEquals(dtoAddressUI.getCity(),jsonPath.getString("payload.city"));
+       assertEquals(dtoAddressUI.getDistrict(),jsonPath.getString("payload.district"));
+       assertEquals(dtoAddressUI.getNeighborhood(),jsonPath.getString("payload.neighborhood"));
 
 
     }
