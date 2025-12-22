@@ -41,7 +41,6 @@ public class AddressTest extends BaseTest {
         accessToken=jsonPathToken.getString("payload.accessToken");
 
         Response responseAddress=  addressClient.getAdress(addressId,accessToken);
-
         JsonPath jsonPath=responseAddress.getBody().jsonPath();
 
         assertNotNull(jsonPath, "Response null olamaz");
