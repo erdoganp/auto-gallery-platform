@@ -41,10 +41,34 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public DtoAccount saveAccount(DtoAccountUI dtoAccountUI){
         DtoAccount dtoAccount = new DtoAccount();
-        Account savedAccount=accountRepository.save(createAccount(dtoAccountUI));
 
-        BeanUtils.copyProperties(savedAccount, dtoAccount);
-        return dtoAccount;
+        System.out.println(Long.valueOf(dtoAccountUI.getAccountNo()));
+
+         boolean accountExists =isAccountExist(Long.valueOf(dtoAccountUI.getAccountNo()));
+
+         if(!accountExists){
+             Account savedAccount=accountRepository.save(createAccount(dtoAccountUI));
+
+             BeanUtils.copyProperties(savedAccount, dtoAccount);
+             return dtoAccount;
+         }
+
+        throw new BaseException(new ErrorMessage(MessageType.DATA_IS_ALREADY_USED,"Account no kullanımda"));
+
+
+
+
+    }
+
+
+
+    public boolean isAccountExist(Long accountNo){
+
+        Optional<Account> optAccount=accountRepository.findAccountByAccountNo(accountNo);
+        if(optAccount.isPresent()){
+            return true;
+        }
+        return  false;
     }
 
     @Override
@@ -79,7 +103,8 @@ public class AccountServiceImpl implements AccountService {
 
 
         Account dbAccount=accountRepository.save(account);
-        BeanUtils.copyProperties(dbAccount, dtoAccount);
+        BeanUtils.copyProperties(dbAccount,
+                dtoAccount);
         return dtoAccount;
     }
 
