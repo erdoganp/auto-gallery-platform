@@ -93,6 +93,32 @@ public class AccountTest extends BaseTest {
 
 
     }
+    @Test
+    public void deleteAccountTest(){
+
+        AccountClient accountClient=new AccountClient();
+
+
+        Long id=8L;
+
+
+        Map<String,String> userCredential =new HashMap<>();
+        userCredential.put("username", "erdogan");
+        userCredential.put("password", "1234");
+
+        Response responseaAuth= authClient.getAuthResponse(userCredential);
+
+        JsonPath  jsonPathAuth=responseaAuth.jsonPath();
+        String accessToken=jsonPathAuth.getString("payload.accessToken");
+
+        Response responseDelete= accountClient.deleteAccount(accessToken,id);
+
+        JsonPath jsonPathAccount=responseDelete.jsonPath();
+
+        assertNotNull(jsonPathAccount);
+        assertEquals("200" , jsonPathAccount.getString("status"));
+
+    }
 
 
 }

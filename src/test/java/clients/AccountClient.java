@@ -35,4 +35,19 @@ public class AccountClient  extends BaseTest {
 
 
     }
+
+    public Response deleteAccount(String accessToken, Long id){
+        return given()
+                .header("Authorization" , "Bearer " + accessToken)
+                .pathParam("id", id)
+                .contentType(ContentType.JSON)
+                .when()
+                .delete("/rest/api/account/delete/{id}")
+                .then()
+                .log().all()
+                .extract().response();
+
+
+
+    }
 }
