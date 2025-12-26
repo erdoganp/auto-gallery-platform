@@ -36,6 +36,21 @@ public class AccountClient  extends BaseTest {
 
     }
 
+    public Response updateAccount(String accessToken, Long accountNo, DtoAccountUI dtoAccountUI){
+        return given()
+                .header("Authorization","Bearer " + accessToken)
+                .pathParam("accountNo", accountNo)
+                .body(dtoAccountUI)
+                .contentType(ContentType.JSON)
+                .when()
+                .put("/rest/api/account/update/{accountNo}")
+                .then()
+                .log().all()
+                .extract().response();
+
+
+    }
+
     public Response deleteAccount(String accessToken, Long id){
         return given()
                 .header("Authorization" , "Bearer " + accessToken)

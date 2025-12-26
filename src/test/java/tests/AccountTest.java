@@ -85,13 +85,6 @@ public class AccountTest extends BaseTest {
        assertEquals(jsonPath.getInt("payload.amount"), dtoAccountUI.getAmount().toBigInteger().intValue());
        assertEquals(jsonPath.getString("payload.currencyType"), dtoAccountUI.getCurrencyType().toString());
 
-
-
-
-
-
-
-
     }
     @Test
     public void deleteAccountTest(){
@@ -120,5 +113,37 @@ public class AccountTest extends BaseTest {
 
     }
 
+    @Test
+    public void updateAccountTest(){
+
+        Long accountNo=123456L;
+        String accessToken;
+        DtoAccountUI dtoAccountUI =new DtoAccountUI();
+        dtoAccountUI.setAccountNo("89888889999");
+        dtoAccountUI.setIban("TR04222299988899");
+        dtoAccountUI.setAmount(BigDecimal.valueOf(89755));
+        dtoAccountUI.setCurrencyType(CurrencyType.EUR);
+
+
+        Map<String , String> userCredential =new HashMap<>();
+        userCredential.put("username", "erdogan");
+        userCredential.put("password", "1234");
+
+        Response autResponse=authClient.getAuthResponse(userCredential);
+        JsonPath authJson=autResponse.jsonPath();
+        accessToken=authJson.getString("payload.accessToken");
+
+       Response responseAccount= accountClient.updateAccount(accessToken, accountNo, dtoAccountUI);
+
+       JsonPath jsonpathAccount =responseAccount.jsonPath();
+
+       assertNotNull(jsonpathAccount);
+
+
+
+
+
+
+    }
 
 }
