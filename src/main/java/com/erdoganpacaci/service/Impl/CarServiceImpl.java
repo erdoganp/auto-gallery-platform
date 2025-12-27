@@ -43,11 +43,17 @@ public class CarServiceImpl implements CarService {
     @Override
     public DtoCar saveCar(DtoCarUI dtoCarUI) {
 
-        DtoCar dtoCar = new DtoCar();
-       Car savedCar= carRepository.save(createCar(dtoCarUI));
+        Optional<Car> car = carRepository.getCarsByPlaka(dtoCarUI.getPlaka());
+        if(car.isEmpty()){
 
-       BeanUtils.copyProperties(savedCar, dtoCar);
-        return dtoCar;
+            DtoCar dtoCar = new DtoCar();
+            Car savedCar= carRepository.save(createCar(dtoCarUI));
+
+            BeanUtils.copyProperties(savedCar, dtoCar);
+            return dtoCar;
+        }
+
+        throw new BaseException(new ErrorMessage(MessageType.DATA_IS_ALREADY_USED, dtoCarUI.getPlaka()));
     }
 
     @Override

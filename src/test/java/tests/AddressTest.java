@@ -23,7 +23,7 @@ public class AddressTest extends BaseTest {
     AuthClient authClient = new AuthClient();
 
     @Test
-    public void getTheAddress(){
+    public void shouldGetTheAddressSuccessfullyTest(){
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
 
         Long addressId=16L;
@@ -82,7 +82,7 @@ public class AddressTest extends BaseTest {
 
     }
     @Test
-    public void saveTheAddressTest(){
+    public void shouldSaveTheAddressSuccessfully(){
         String accessToken;
         DtoAddressUI dtoAddressUI = new DtoAddressUI();
         dtoAddressUI.setCity("İzmir");
@@ -114,7 +114,7 @@ public class AddressTest extends BaseTest {
     }
 
     @Test
-    public  void deleteAddressTest(){
+    public  void shouldDeleteAddressSuccessfullyTest(){
 
         Long addressId=15L;
         String accessToken;
@@ -139,7 +139,7 @@ public class AddressTest extends BaseTest {
 
     }
     @Test
-    void updateAddressTest(){
+    void shouldUpdateAddressSuccessfullyTest(){
 
         DtoAddressUI dtoAddressUI = new DtoAddressUI();
 

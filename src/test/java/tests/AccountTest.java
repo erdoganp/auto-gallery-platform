@@ -25,7 +25,7 @@ public class AccountTest extends BaseTest {
     AuthClient authClient= new AuthClient();
 
     @Test
-    public void getAllAccountTest(){
+    public void shouldGetAllAccountTest(){
 
 
         String accessToken;
@@ -55,7 +55,7 @@ public class AccountTest extends BaseTest {
     }
 
     @Test
-    public void createAccount(){
+    public void shouldCreateAccountSuccussfully(){
 
         AccountClient accountClient= new AccountClient();
         DtoAccountUI dtoAccountUI=new DtoAccountUI();
@@ -87,7 +87,7 @@ public class AccountTest extends BaseTest {
 
     }
     @Test
-    public void deleteAccountTest(){
+    public void shouldDeleteAccountDeleteSuccessfully(){
 
         AccountClient accountClient=new AccountClient();
 
@@ -114,7 +114,7 @@ public class AccountTest extends BaseTest {
     }
 
     @Test
-    public void updateAccountTest(){
+    public void shouldUpdateAccountSuccesfully(){
 
         Long accountNo=123456L;
         String accessToken;
