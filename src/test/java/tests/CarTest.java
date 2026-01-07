@@ -5,8 +5,10 @@ import clients.CarClient;
 import com.erdoganpacaci.dto.DtoCarUI;
 import com.erdoganpacaci.enums.CurrencyType;
 import com.erdoganpacaci.model.CarStatusType;
+import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -85,6 +87,95 @@ public class CarTest {
         assertEquals(dtoCarUI.getCurrencyType().toString(), jsonPathCar.get("payload.currencyType"));
         assertEquals(dtoCarUI.getDamagePrice().intValue(), (int)(jsonPathCar.get("payload.damagePrice")));
         assertEquals(dtoCarUI.getProductionYear(), jsonPathCar.getInt("payload.productionYear"));
+
+
+
+    }
+    @Test
+    public void shouldDeleteCarTest(){
+
+        Long id=1L;
+        String accessToken;
+
+        Map<String, String> userCredential=new HashMap<>();
+        userCredential.put("username", "erdogan");
+        userCredential.put("password", "1234");
+
+        Response authResponse= authClient.getAuthResponse(userCredential);
+        JsonPath jsonAuth=authResponse.jsonPath();
+        accessToken = jsonAuth.getString("payload.accessToken");
+
+       Response carResponse= carClient.deleteCar(accessToken,id);
+       JsonPath jsonCar=carResponse.jsonPath();
+
+       assertNotNull(jsonCar);
+       assertEquals("200" ,jsonCar.getString("status"));
+
+
+    }
+
+
+    @Test
+    public void shouldDeletealreadyDeteledEntity(){
+
+        Long id=1L;
+        String accessToken;
+
+        Map<String, String> userCredential=new HashMap<>();
+        userCredential.put("username", "erdogan");
+        userCredential.put("password", "1234");
+
+        Response authResponse= authClient.getAuthResponse(userCredential);
+        JsonPath jsonAuth=authResponse.jsonPath();
+        accessToken = jsonAuth.getString("payload.accessToken");
+
+        Response carResponse= carClient.deleteCar(accessToken,id);
+        JsonPath jsonCar=carResponse.jsonPath();
+
+    }
+    @Test
+    public void shouldUpdateTheCarTest(){
+
+        Long id= 3L;
+        String accessToken;
+        DtoCarUI dtoCarUI = new DtoCarUI();
+        dtoCarUI.setCarStatusType(CarStatusType.SALABLE);
+        dtoCarUI.setModel("200L");
+        dtoCarUI.setPrice(BigDecimal.valueOf(6000));
+        dtoCarUI.setBrand("BMW");
+        dtoCarUI.setPlaka("34 thk 85");
+        dtoCarUI.setProductionYear(2026);
+        dtoCarUI.setDamagePrice(BigDecimal.valueOf(10));
+        dtoCarUI.setCurrencyType(CurrencyType.EUR);
+
+
+
+        Map<String, String> userCredential= new HashMap<>();
+
+        userCredential.put("username", "erdogan");
+        userCredential.put("password", "1234");
+
+        Response authResponse = authClient.getAuthResponse(userCredential);
+        JsonPath  jsonAuth = authResponse.jsonPath();
+
+        accessToken  =jsonAuth.getString("payload.accessToken");
+
+        Response carResponse  = carClient.updateCar(accessToken, id, dtoCarUI);
+
+        JsonPath jsonCar = carResponse.jsonPath();
+
+        assertEquals(dtoCarUI.getCarStatusType().toString(), jsonCar.get("payload.carStatusType"));
+        assertEquals(dtoCarUI.getPlaka(), jsonCar.getString("payload.plaka"));
+        assertEquals(dtoCarUI.getModel(), jsonCar.getString("payload.model"));
+        assertEquals(dtoCarUI.getBrand(), jsonCar.getString("payload.brand"));
+        assertEquals(dtoCarUI.getPrice().intValue(), (int)jsonCar.get("payload.price"));
+        assertEquals(dtoCarUI.getCurrencyType().toString(), jsonCar.get("payload.currencyType"));
+        assertEquals(dtoCarUI.getDamagePrice().intValue(), (int)(jsonCar.get("payload.damagePrice")));
+        assertEquals(dtoCarUI.getProductionYear(), jsonCar.getInt("payload.productionYear"));
+
+
+
+
 
 
 

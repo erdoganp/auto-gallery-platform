@@ -33,7 +33,7 @@ public class RestCarControllerImpl extends RestBaseController implements RestCar
         return ok(carService.getCars());
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     @Override
     public RootEntity<DtoCar> updateCar(@Valid @PathVariable(value = "id")Long id,
                                         @RequestBody DtoCarUI dtoCarUI) {

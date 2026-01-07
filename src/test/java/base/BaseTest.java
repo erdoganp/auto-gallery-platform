@@ -6,6 +6,9 @@ import org.junit.jupiter.api.BeforeAll;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 
+import static io.restassured.RestAssured.config;
+import static io.restassured.config.FailureConfig.failureConfig;
+
 public class BaseTest {
 
     @BeforeAll
@@ -17,6 +20,7 @@ public class BaseTest {
      
         //RestAssured.baseURI = System.getenv("BASE_URL");
         RestAssured.baseURI="http://localhost:8080";
+
 
         RestAssured.filters(
                 new RequestLoggingFilter(),
