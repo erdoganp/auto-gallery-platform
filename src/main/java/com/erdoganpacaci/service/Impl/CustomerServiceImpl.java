@@ -144,5 +144,37 @@ public class CustomerServiceImpl implements CustomerService {
         return null;
     }
 
+    @Override
+    public DtoCustomer getTheCustomer(Long id) {
+        DtoCustomer dtoCustomer = new DtoCustomer();
+        DtoAccount dtoAccount= new DtoAccount();
+        DtoAddress dtoAddress = new DtoAddress();
+
+        Optional<Customer> optCustomer=customerRepository.findById(id);
+        if(!optCustomer.isPresent()){
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST, id.toString()));
+
+        }
+
+        dtoCustomer.setTckn(optCustomer.get().getTckn());
+        dtoCustomer.setId(optCustomer.get().getId());
+        dtoCustomer.setCreateTime(optCustomer.get().getCreateTime());
+        dtoCustomer.setFirstName(optCustomer.get().getFirstName());
+        dtoCustomer.setLastName(optCustomer.get().getLastName());
+        dtoCustomer.setBirthOfDate(optCustomer.get().getBirthOfDate());
+
+        Address address= optCustomer.get().getAddress();
+        Account account = optCustomer.get().getAccount();
+
+        BeanUtils.copyProperties(address, dtoAddress);
+        BeanUtils.copyProperties(account, dtoAccount);
+
+        dtoCustomer.setAccount(dtoAccount);
+        dtoCustomer.setAddress(dtoAddress);
+
+
+        return dtoCustomer;
+    }
+
 
 }

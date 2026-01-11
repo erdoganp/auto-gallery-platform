@@ -10,4 +10,6 @@ public interface RestCustomerController {
     public RootEntity<DtoCustomer> saveCustomer(DtoCustomerUI dtoCustomerUI);
     public ResponseEntity<Void> deleteCustomer(Long id);
     public RootEntity<DtoCustomer> updateCustomer(Long id, DtoCustomerUI dtoCustomerUI);
+    public RootEntity<DtoCustomer> getTheCustomer(Long id);
+
 }

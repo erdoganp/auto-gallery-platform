@@ -44,4 +44,10 @@ public class RestCustomerControllerImpl extends RestBaseController implements Re
       return  ok(customerService.updateCustomer(id, dtoCustomerUI));
 
     }
+
+    @GetMapping("/{id}")
+    @Override
+    public RootEntity<DtoCustomer> getTheCustomer(@Valid @PathVariable(value = "id") Long id) {
+        return ok(customerService.getTheCustomer(id));
+    }
 }

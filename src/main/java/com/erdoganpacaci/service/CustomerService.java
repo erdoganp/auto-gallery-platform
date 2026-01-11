@@ -11,4 +11,6 @@ public interface CustomerService {
     public DtoCustomer updateCustomer(Long id, DtoCustomerUI dtoCustomerUI);
 
     public Void deleteCustomer(Long id);
+
+    public DtoCustomer getTheCustomer(Long id);
 }
