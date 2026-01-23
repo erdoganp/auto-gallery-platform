@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -17,5 +18,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     @Query("SELECT a FROM Customer a LEFT JOIN FETCH a.account WHERE a.account.id = :id")
     Optional<Customer> findWithAccount(@Param("id") Long id);
+
 
 }

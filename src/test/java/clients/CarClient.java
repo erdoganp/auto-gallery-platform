@@ -42,14 +42,6 @@ public class CarClient extends BaseTest {
     }
 
     public Response deleteCar(String accessToken,Long id){
-      /*  return given()
-                .header("Authorization", "Bearer " + accessToken)
-                .pathParam("id", id)
-                .when()
-                .request(Method.DELETE,"rest/api/car/delete/{id}")
-                .andReturn();
-*/
-
         return given()
                 .header("Authorization", "Bearer " + accessToken)
                 .pathParam("id", id)

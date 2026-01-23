@@ -4,6 +4,8 @@ import com.erdoganpacaci.dto.DtoCustomer;
 import com.erdoganpacaci.dto.DtoCustomerUI;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface RestCustomerController {
 
 
@@ -11,5 +13,6 @@ public interface RestCustomerController {
     public ResponseEntity<Void> deleteCustomer(Long id);
     public RootEntity<DtoCustomer> updateCustomer(Long id, DtoCustomerUI dtoCustomerUI);
     public RootEntity<DtoCustomer> getTheCustomer(Long id);
+    public RootEntity<List<DtoCustomer>> getAllCustomer();
 
 }

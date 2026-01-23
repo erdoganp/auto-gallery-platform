@@ -15,7 +15,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -174,6 +176,47 @@ public class CustomerServiceImpl implements CustomerService {
 
 
         return dtoCustomer;
+    }
+
+    @Override
+    public List<DtoCustomer> getAllCustomer() {
+
+        List<DtoCustomer> listDtoCustomer = new ArrayList<>();
+
+        List<Customer> dbCustomer = customerRepository.findAll();
+
+        if(dbCustomer.isEmpty()){
+            throw new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST,"no records"));
+        }
+
+        for(Customer customer : dbCustomer){
+
+
+            DtoCustomer dtoCustomer = new DtoCustomer();
+            DtoAccount dtoAccount= new DtoAccount();
+            DtoAddress dtoAddress = new DtoAddress();
+
+            dtoCustomer.setTckn(customer.getTckn());
+            dtoCustomer.setId(customer.getId());
+            dtoCustomer.setCreateTime(customer.getCreateTime());
+            dtoCustomer.setFirstName(customer.getFirstName());
+            dtoCustomer.setLastName(customer.getLastName());
+            dtoCustomer.setBirthOfDate(customer.getBirthOfDate());
+
+            Address address= customer.getAddress();
+            Account account = customer.getAccount();
+
+            BeanUtils.copyProperties(address, dtoAddress);
+            BeanUtils.copyProperties(account, dtoAccount);
+
+            dtoCustomer.setAccount(dtoAccount);
+            dtoCustomer.setAddress(dtoAddress);
+
+            listDtoCustomer.add(dtoCustomer);
+
+        }
+
+        return listDtoCustomer;
     }
 
 

@@ -3,15 +3,18 @@ package tests;
 import base.BaseTest;
 import clients.AuthClient;
 import clients.CustomerClient;
+import com.erdoganpacaci.dto.DtoCustomer;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CustomerTest extends BaseTest {
 
@@ -34,7 +37,7 @@ public class CustomerTest extends BaseTest {
         JsonPath authJson = authResponse.jsonPath();
         accessToken = authJson.getString("payload.accessToken");
 
-        Response customerResponse = customerClient.getTheCar(id, accessToken);
+        Response customerResponse = customerClient.getTheCustomer(id, accessToken);
 
         JsonPath customerJson= customerResponse.jsonPath();
 
@@ -56,6 +59,37 @@ public class CustomerTest extends BaseTest {
                 .body("payload.account.iban", notNullValue())
                 .body("payload.account.amount", notNullValue())
                 .body("payload.account.currencyType", notNullValue());
+
+
+
+    }
+
+    @Test
+    public void shouldGetallCustomer(){
+
+        String accessToken;
+
+        Map<String, String> userCredential = new HashMap<>();
+        userCredential.put("username", "erdogan");
+        userCredential.put("password", "1234");
+
+
+        Response authResponse=authClient.getAuthResponse(userCredential);
+        JsonPath jsonAuth=authResponse.jsonPath();
+        accessToken = jsonAuth.getString("payload.accessToken");
+
+        List<DtoCustomer> customers  = customerClient.getAllCustomer(accessToken);
+
+        boolean customerIsValid = customers.stream()
+                .allMatch(customer ->customer.getFirstName() != null &&
+                                                customer.getLastName()   !=null  &&
+                                                customer.getTckn()       !=null  &&
+                                                customer.getAccount()    !=null  );
+
+
+
+        assertTrue(customerIsValid, "Expected all values valid");
+
 
 
 

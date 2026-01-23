@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/rest/api/customer")
 public class RestCustomerControllerImpl extends RestBaseController implements RestCustomerController {
@@ -50,4 +52,12 @@ public class RestCustomerControllerImpl extends RestBaseController implements Re
     public RootEntity<DtoCustomer> getTheCustomer(@Valid @PathVariable(value = "id") Long id) {
         return ok(customerService.getTheCustomer(id));
     }
+
+    @GetMapping("/all")
+    @Override
+    public RootEntity<List<DtoCustomer>> getAllCustomer() {
+        return ok(customerService.getAllCustomer());
+    }
+
+
 }
