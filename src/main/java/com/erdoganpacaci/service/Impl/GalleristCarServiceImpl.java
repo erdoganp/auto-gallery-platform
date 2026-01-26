@@ -87,13 +87,18 @@ public class GalleristCarServiceImpl implements GalleristCarService {
         for(GalleristCar galleristCar:galleristCars){
             DtoCar dtoCar=new DtoCar();
             DtoGallerist dtoGallerist=new DtoGallerist();
+            DtoAddress dtoAddress =new DtoAddress();
             DtoGalleristCar dtoGalleristCar=new DtoGalleristCar();
+
             BeanUtils.copyProperties(galleristCar,dtoGalleristCar);
             BeanUtils.copyProperties(galleristCar.getCar(),dtoCar);
             BeanUtils.copyProperties(galleristCar.getGallerist(),dtoGallerist);
+            BeanUtils.copyProperties(galleristCar.getGallerist().getAddress(),dtoAddress);
             dtoGalleristCar.setCar(dtoCar);
+            dtoGallerist.setAddress(dtoAddress);
             dtoGalleristCar.setGallerist(dtoGallerist);
             dtoGalleristCars.add(dtoGalleristCar);
+
         }
         return dtoGalleristCars;
 
@@ -101,7 +106,6 @@ public class GalleristCarServiceImpl implements GalleristCarService {
 
     @Override
     public DtoGalleristCar getGalleristCarById(Long id) {
-
 
         DtoGalleristCar dtoGalleristCar=new DtoGalleristCar();
         DtoGallerist dtoGallerist=new DtoGallerist();
