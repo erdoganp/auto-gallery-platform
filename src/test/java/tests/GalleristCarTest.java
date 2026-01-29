@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GalleristCarTest extends BaseTest {
 
@@ -48,6 +48,39 @@ public class GalleristCarTest extends BaseTest {
                                     );
 
         assertTrue(isResponseValid, "all values should be valid");
+
+    }
+
+    @Test
+    public void getGalleristCarById(){
+
+        String accessToken;
+
+        Long gallerisId=1L;
+
+        Map<String, String> userCredential= new HashMap<>();
+        userCredential.put("username", "erdogan");
+        userCredential.put("password", "1234");
+
+        Response authClientResponse = authClient.getAuthResponse(userCredential);
+        JsonPath jsonAuth = authClientResponse.jsonPath();
+        accessToken = jsonAuth.getString("payload.accessToken");
+
+        DtoGalleristCar dtoGalleristCar = galleristCarClient.getGalleristCarById(accessToken, gallerisId );
+
+        assertNotNull(dtoGalleristCar);
+        assertNotNull(dtoGalleristCar.getGallerist().getAddress());
+        assertNotNull(dtoGalleristCar.getGallerist().getFirstName());
+        assertNotNull(dtoGalleristCar.getCar().getModel());
+        assertNotNull(dtoGalleristCar.getCar().getPlaka());
+        assertNotNull(dtoGalleristCar.getCar().getPrice());
+        assertNotNull(dtoGalleristCar.getCar().getBrand());
+        assertNotNull(dtoGalleristCar.getCar().getProductionYear());
+        assertNotNull(dtoGalleristCar.getCar().getDamagePrice());
+
+
+
+
 
     }
 }
